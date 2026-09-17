@@ -1,0 +1,11 @@
+import { useEffect, useState } from 'react';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { Button, HelperText, TextInput } from 'react-native-paper';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { TopoTela } from '@shared/components';
+import { espaco, semantica } from '@shared/theme';
+import { funcionariosService } from '../services/funcionariosService';
+import { useSalvarFuncionario } from '../hooks/useFuncionarios';
+type R=RouteProp<{FuncionarioForm:{id?:number}},'FuncionarioForm'>;
+export function FuncionarioFormScreen(){const nav=useNavigation<any>();const route=useRoute<R>();const id=route.params?.id;const {salvar,salvando,erro}=useSalvarFuncionario(id);const [v,setV]=useState({nome:'',matricula:'',cargo:'',setor:''});const [tocado,setTocado]=useState(false);useEffect(()=>{if(id)void funcionariosService.buscar(id).then(f=>setV({nome:f.nome,matricula:f.matricula,cargo:f.cargo??'',setor:f.setor??''}));},[id]);const invalido=!v.nome.trim()||!v.matricula.trim()||!v.cargo.trim()||!v.setor.trim();const enviar=async()=>{setTocado(true);if(invalido)return;await salvar(v);nav.goBack();};return <View style={e.tela}><TopoTela titulo={id?'Editar Funcionário':'Novo Funcionário'} aoVoltar={()=>nav.goBack()}/><KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS==='ios'?'padding':undefined}><ScrollView contentContainerStyle={e.form} keyboardShouldPersistTaps="handled">{([['nome','Nome completo','Ex: Carlos Souza'],['matricula','Matrícula','Ex: F001'],['cargo','Cargo','Ex: Analista de Qualidade'],['setor','Setor','Ex: Qualidade']] as const).map(([k,l,p])=><View key={k}><TextInput mode="outlined" label={l} placeholder={p} value={v[k]} onChangeText={x=>setV({...v,[k]:x})} error={tocado&&!v[k].trim()}/><HelperText type="error" visible={tocado&&!v[k].trim()}>{l} é obrigatório.</HelperText></View>)}{!!erro&&<HelperText type="error" visible>{erro.message}</HelperText>}<Button mode="contained" onPress={()=>void enviar()} loading={salvando} disabled={salvando} contentStyle={{paddingVertical:4}}>{id?'Salvar Alterações':'Cadastrar Funcionário'}</Button></ScrollView></KeyboardAvoidingView></View>}
+const e=StyleSheet.create({tela:{flex:1,backgroundColor:semantica.fundo},form:{padding:espaco.md,gap:espaco.xs,paddingBottom:espaco.xxl}});

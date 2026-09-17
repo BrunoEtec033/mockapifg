@@ -1,0 +1,8 @@
+node_modules/
+.expo/
+dist/
+web-build/
+*.log
+.env
+.DS_Store
+src/core/api/contracts/openapi.d.ts

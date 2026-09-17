@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "Nexo",
+    "slug": "nexo-app",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "nexo",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#F0FDFA",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#F0FDFA"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": { "supportsTablet": true, "bundleIdentifier": "br.com.nexo.app" },
+    "android": { "package": "br.com.nexo.app" },
+    "extra": {
+      "apiBaseUrl": "http://localhost:3000",
+      "apiTimeoutMs": 15000,
+      "ambiente": "mock"
+    }
+  }
+}

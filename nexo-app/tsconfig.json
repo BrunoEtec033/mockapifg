@@ -1,0 +1,20 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    // react-query v5 e zod publicam tipos via "exports"; com moduleResolution
+    // "node" (padrão do tsconfig.base do Expo) eles resolvem para `any`.
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "noUncheckedIndexedAccess": true,
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@core/*": ["src/core/*"],
+      "@shared/*": ["src/shared/*"],
+      "@features/*": ["src/features/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}

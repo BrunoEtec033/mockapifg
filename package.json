@@ -5,13 +5,17 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "app": "npm --prefix ./nexo-app run web",
+    "dev:app": "npm --prefix ./nexo-app run web",
+    "dev:all": "concurrently \"npm run dev\" \"npm run app\""
   },
   "dependencies": {
     "json-server": "^0.17.4",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "nodemon": "^3.1.0"
   }
 }
